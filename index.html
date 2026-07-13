@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lucky Wheel 🎡</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="description" content="A colorful, rigged lucky wheel application with a confetti celebration.">
+    <style>
+      /* Critical inline CSS to prevent FOUC before Vite injects external CSS */
+      body { margin: 0; background-color: #fff9e6; }
+      #loader {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background-color: #fff9e6;
+        z-index: 999999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.6s ease, visibility 0.6s ease;
+      }
+      #loader.hidden { opacity: 0; visibility: hidden; }
+      .spinner {
+        width: 60px; height: 60px;
+        border: 6px solid #ffc9c9;
+        border-top-color: #ff4b4b;
+        border-radius: 50%;
+        animation: spin 1s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+  </head>
+  <body>
+    <div id="loader">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="theme-picker" id="theme-picker">
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle themes">🎨 Themes</button>
+      <div class="theme-options">
+        <button class="theme-btn active" data-theme="carnival">🎡 Carnival</button>
+        <button class="theme-btn" data-theme="pastel-ocean">🌊 Pastel Ocean</button>
+        <button class="theme-btn" data-theme="space">🚀 Space Explosion</button>
+      </div>
+    </div>
+
+    <div class="app">
+      <header>
+        <h1>Lucky Wheel</h1>
+        <p>Click any slice to spin!</p>
+      </header>
+      
+      <main>
+        <div class="wheel-container">
+          <svg class="pointer" viewBox="0 0 100 100">
+            <polygon points="50,95 20,25 80,25" />
+          </svg>
+          <svg id="wheel" width="500" height="500" viewBox="0 0 500 500" aria-label="A lucky wheel"></svg>
+        </div>
+
+        <section class="controls">
+          <label for="items-input"><h2>Wheel Options</h2></label>
+          <p class="help-text">Enter items separated by newlines.</p>
+          <textarea id="items-input" rows="7"></textarea>
+          <button id="update-btn">Update Wheel</button>
+        </section>
+      </main>
+    </div>
+
+    <div id="winner-modal" class="modal" aria-hidden="true" role="dialog">
+      <div class="modal-content">
+        <h2 id="winner-text"></h2>
+        <button id="close-modal">Awesome!</button>
+      </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
