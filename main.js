@@ -2,7 +2,7 @@ import './style.css';
 import gsap from 'gsap';
 import confetti from 'canvas-confetti';
 
-let items = ['Candy 🍬', 'Toy 🧸', 'Free Spin 🎡', 'Sticker 🌟', 'Balloon 🎈', 'Coupon 🎟️'];
+let items = ['Candy', 'Toy', 'Free Spin', 'Sticker', 'Balloon', 'Coupon'];
 let currentRotation = 0;
 let isSpinning = false;
 
