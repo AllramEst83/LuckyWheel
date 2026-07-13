@@ -2,7 +2,14 @@ import './style.css';
 import gsap from 'gsap';
 import confetti from 'canvas-confetti';
 
-let items = ['Candy', 'Toy', 'Free Spin', 'Sticker', 'Balloon', 'Coupon'];
+let items = [
+  'High Five', 
+  'Dad Joke', 
+  'Dance Off', 
+  'Mystery Box', 
+  'Do 5 Pushups', 
+  'Sing a Song'
+];
 let currentRotation = 0;
 let isSpinning = false;
 
@@ -173,6 +180,12 @@ function spinTo(targetIndex) {
   });
 }
 
+const confettiCanvas = document.getElementById('confetti-canvas');
+const modalConfetti = confetti.create(confettiCanvas, {
+  resize: true,
+  useWorker: true
+});
+
 function showWinner(item) {
   winnerText.textContent = `Yay! You won: ${item}`;
   winnerModal.classList.add('visible');
@@ -181,35 +194,32 @@ function showWinner(item) {
   const palette = themes[currentTheme].slices;
   
   // 1. Massive center burst
-  confetti({
+  modalConfetti({
     particleCount: 150,
     spread: 100,
     origin: { y: 0.6 },
-    colors: palette,
-    zIndex: 2147483647
+    colors: palette
   });
 
   // 2. Left cannon burst shortly after
   setTimeout(() => {
-    confetti({
+    modalConfetti({
       particleCount: 100,
       angle: 60,
       spread: 80,
       origin: { x: 0, y: 0.8 },
-      colors: palette,
-      zIndex: 2147483647
+      colors: palette
     });
   }, 250);
 
   // 3. Right cannon burst
   setTimeout(() => {
-    confetti({
+    modalConfetti({
       particleCount: 100,
       angle: 120,
       spread: 80,
       origin: { x: 1, y: 0.8 },
-      colors: palette,
-      zIndex: 2147483647
+      colors: palette
     });
   }, 450);
 }
