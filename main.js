@@ -178,29 +178,40 @@ function showWinner(item) {
   winnerModal.classList.add('visible');
   closeModalBtn.focus();
   
-  const duration = 3.5 * 1000;
-  const animationEnd = Date.now() + duration;
-  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 2147483647 };
+  const palette = themes[currentTheme].slices;
+  
+  // 1. Massive center burst
+  confetti({
+    particleCount: 150,
+    spread: 100,
+    origin: { y: 0.6 },
+    colors: palette,
+    zIndex: 2147483647
+  });
 
-  const randomInRange = (min, max) => Math.random() * (max - min) + min;
-
-  const interval = setInterval(function() {
-    const timeLeft = animationEnd - Date.now();
-
-    if (timeLeft <= 0) {
-      return clearInterval(interval);
-    }
-
-    const particleCount = 50 * (timeLeft / duration);
-    confetti(Object.assign({}, defaults, { 
-      particleCount, 
-      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } 
-    }));
-    confetti(Object.assign({}, defaults, { 
-      particleCount, 
-      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } 
-    }));
+  // 2. Left cannon burst shortly after
+  setTimeout(() => {
+    confetti({
+      particleCount: 100,
+      angle: 60,
+      spread: 80,
+      origin: { x: 0, y: 0.8 },
+      colors: palette,
+      zIndex: 2147483647
+    });
   }, 250);
+
+  // 3. Right cannon burst
+  setTimeout(() => {
+    confetti({
+      particleCount: 100,
+      angle: 120,
+      spread: 80,
+      origin: { x: 1, y: 0.8 },
+      colors: palette,
+      zIndex: 2147483647
+    });
+  }, 450);
 }
 
 const themePicker = document.getElementById('theme-picker');
