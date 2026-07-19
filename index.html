@@ -3,78 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lucky Wheel 🎡</title>
+    <title>Wheel of Names Replica</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <meta name="description" content="A colorful, rigged lucky wheel application with a confetti celebration.">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-      /* Critical inline CSS to prevent FOUC before Vite injects external CSS */
-      body { margin: 0; background-color: #fff9e6; }
+      body { margin: 0; background-color: #f0f2f5; font-family: 'Roboto', sans-serif; }
       #loader {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        background-color: #fff9e6;
-        z-index: 999999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 0.6s ease, visibility 0.6s ease;
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background-color: #f0f2f5; z-index: 999999;
+        display: flex; justify-content: center; align-items: center;
+        transition: opacity 0.3s ease;
       }
       #loader.hidden { opacity: 0; visibility: hidden; }
       .spinner {
-        width: 60px; height: 60px;
-        border: 6px solid #ffc9c9;
-        border-top-color: #ff4b4b;
-        border-radius: 50%;
-        animation: spin 1s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
+        width: 40px; height: 40px;
+        border: 4px solid #ddd; border-top-color: #1a73e8;
+        border-radius: 50%; animation: spin 1s linear infinite;
       }
       @keyframes spin { to { transform: rotate(360deg); } }
     </style>
   </head>
-  <body>
-    <div id="loader">
-      <div class="spinner"></div>
-    </div>
+  <body class="light-mode">
+    <div id="loader"><div class="spinner"></div></div>
 
-    <div class="theme-picker" id="theme-picker">
-      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle themes">🎨 Themes</button>
-      <div class="theme-options">
-        <button class="theme-btn active" data-theme="carnival">🎡 Carnival</button>
-        <button class="theme-btn" data-theme="pastel-ocean">🌊 Pastel Ocean</button>
-        <button class="theme-btn" data-theme="space">🚀 Space Explosion</button>
+    <nav class="navbar">
+      <div class="nav-left">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2v20M2 12h20M12 12l7 7M12 12l-7-7M12 12l7-7M12 12l-7 7"></path>
+        </svg>
+        <span class="logo-text">Wheel of Names</span>
       </div>
-    </div>
+      <div class="nav-right">
+        <button id="theme-toggle" class="nav-btn">
+          <svg id="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <span class="nav-btn-text">Dark</span>
+        </button>
+      </div>
+    </nav>
 
-    <div class="app">
-      <header>
-        <h1>Lucky Wheel</h1>
-        <p>Click any slice to spin!</p>
-      </header>
-      
-      <main>
-        <div class="wheel-container">
-          <svg class="pointer" viewBox="0 0 100 100">
-            <polygon points="50,95 20,25 80,25" />
-          </svg>
-          <svg id="wheel" width="500" height="500" viewBox="0 0 500 500" aria-label="A lucky wheel"></svg>
+    <div class="main-container">
+      <div class="wheel-section">
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <svg id="wheel" width="500" height="500" viewBox="0 0 500 500"></svg>
+          <button id="spin-center-btn" aria-label="Spin Wheel">
+            <span>SPIN</span>
+          </button>
         </div>
-
-        <section class="controls">
-          <label for="items-input"><h2>Wheel Options</h2></label>
-          <p class="help-text">Enter items separated by newlines.</p>
-          <textarea id="items-input" rows="7"></textarea>
-          <button id="update-btn">Update Wheel</button>
-        </section>
-      </main>
+      </div>
+      
+      <div class="controls-section">
+        <div class="controls-card">
+          <div class="tabs">
+            <button class="tab-btn active">Entries</button>
+            <button class="tab-btn disabled" aria-disabled="true">Results</button>
+            <span class="entry-count" id="entry-count">6</span>
+          </div>
+          <div class="toolbar">
+            <button class="tool-btn" id="shuffle-btn" title="Shuffle">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+              Shuffle
+            </button>
+            <button class="tool-btn" id="sort-btn" title="Sort">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+              Sort
+            </button>
+          </div>
+          <textarea id="items-input" spellcheck="false" aria-label="Wheel Entries"></textarea>
+        </div>
+      </div>
     </div>
 
     <div id="winner-modal" class="modal" aria-hidden="true" role="dialog">
       <canvas id="confetti-canvas"></canvas>
       <div class="modal-content">
         <h2 id="winner-text"></h2>
-        <button id="close-modal">Awesome!</button>
+        <div class="modal-actions">
+          <button id="close-modal" class="primary-btn">Close</button>
+          <button id="remove-winner-btn" class="secondary-btn">Remove</button>
+        </div>
       </div>
     </div>
 
